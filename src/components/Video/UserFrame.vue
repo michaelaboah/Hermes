@@ -31,18 +31,6 @@ import {  onMounted, ref } from 'vue';
 
 <style scoped>
     video::-webkit-media-controls-start-playback-button {
-    display: none;
+        display: none;
     }
-
-    /* .frame {
-        background-color: black;
-        width: 100%;
-        height: 400px;
-        padding: 10px
-    }
-    video {
-    max-width: 100%;
-    max-height: 100%; 
-    object-fit: contain;
-    } */
 </style>
