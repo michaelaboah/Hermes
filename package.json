@@ -14,7 +14,8 @@
     "@tauri-apps/api": "^1.2.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "vue": "^3.2.45",
-    "vue-resizable": "^2.1.7"
+    "vue-resizable": "^2.1.7",
+    "webrtc-adapter": "^8.2.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",

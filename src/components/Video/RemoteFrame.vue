@@ -3,23 +3,46 @@
 
     const videoElement = ref<HTMLVideoElement | null>(null);
 
-    let remoteStream = ref<MediaStream>()
-    let peerConnection;
+    //This should be of type RTCConfiguration
+    const remoteProps: RTCConfiguration = defineProps()
 
+    let remoteStream = ref<MediaStream>()
+    let peerConnection: RTCPeerConnection;
+
+    let localStream = ref<MediaStream>()
 
 
     async function createOffer() {
-        peerConnection = new RTCPeerConnection()
+        peerConnection = new RTCPeerConnection(remoteProps)        
+    
+        localStream.value?.getTracks().forEach((track) => {
+            peerConnection.addTrack(track, localStream.value!)
+        })
+
+        peerConnection.ontrack = (event) => {
+            event.streams[0].getTracks().forEach((track) => {
+                remoteStream.value?.addTrack(track)
+            })
+        }
+
         remoteStream.value = new MediaStream()
         videoElement.value!.srcObject = remoteStream.value
+
+        peerConnection.onicecandidate =async (event) => {
+            if (event.candidate) {
+                console.log("New Ice candiate", event.candidate)
+            }
+        }
+
 
         let offer = await peerConnection.createOffer()
         await peerConnection.setLocalDescription(offer)
 
-        console.log(offer)
+        // console.log(offer)
     }
 
     onMounted(async () => {
+        localStream.value = await navigator.mediaDevices.getUserMedia({video: true})
         createOffer()
     })
 </script>
