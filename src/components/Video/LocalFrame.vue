@@ -8,11 +8,12 @@
         }
     })
 
+    const emits = defineEmits(['toggleAudio', 'toggleCamera'])
+
     let videoElement = ref<HTMLVideoElement | null>(null)
 
     onMounted(() => {
-        if (props.stream) {
-            console.log(props.stream)
+        if (props.stream) {            
             videoElement.value!.srcObject = props.stream
         }
     })
@@ -27,9 +28,3 @@
              class="object-none" ref="videoElement" preload="none"  autoplay playsinline="true"/>
     </div>
 </template>
-
-<style scoped>
-    /* video::-webkit-media-controls-start-playback-button {
-        display: none;
-    } */
-</style>
