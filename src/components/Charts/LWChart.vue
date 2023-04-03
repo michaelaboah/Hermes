@@ -1,5 +1,4 @@
 <script setup lang="ts">
-//@ts-nocheck
 import {
   ref,
   onMounted,
@@ -307,7 +306,7 @@ watch(
 );
 
 // ******** Data watchers
-watch(props.volumeData, (newData) => {
+watch(props.volumeData!, (newData) => {
   if (series) {
     series.setData(newData);
   }
@@ -318,7 +317,7 @@ watch(props.volumeData, (newData) => {
 });
 
 // Single Value Data
-watch(props.lineData, (newData) => {
+watch(props.lineData!, (newData) => {
   // console.log(newData)
   if (lineSeries) {
     lineSeries.setData(newData as any[]);
@@ -330,9 +329,9 @@ watch(props.lineData, (newData) => {
 });
 
 // Single Value Data
-watch(props.ohlcData, (newData) => {
+watch(props.ohlcData!, (newData) => {
   // console.log(newData)
-  if (candleSeries && props.ohlcData.length > 1) {
+  if (candleSeries && props.ohlcData!.length > 1) {
     candleSeries.update(newData[newData.length - 1] as any);
   } else {
     candleSeries!.setData(newData as any[]);

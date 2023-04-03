@@ -78,7 +78,6 @@
 </template>
 
 <script setup lang="ts">
-//@ts-nocheck
 import { reactive, ref } from "vue";
 import { NSelect, NButton, NScrollbar } from "naive-ui";
 import LWChart from "../Charts/LWChart.vue";
@@ -139,7 +138,6 @@ async function getSymbols() {
 const socket = new WebSocket("wss://api.goquant.io/ws");
 
 async function subscribe() {
-  // socket =
   const { symbol, asset, type, exchange } = selected;
   socket.send(
     `{"event":"subscribe", "channel":"${exchange}.${asset}.${type}.${symbol}"}`
@@ -155,7 +153,7 @@ async function subscribe() {
       return;
     }
 
-    let parsedData: BaseData | undefined = JSON.parse(rawData);
+    let parsedData: any | undefined = JSON.parse(rawData);
 
     if (!parsedData) {
       console.log("This object is undefined");
@@ -164,7 +162,9 @@ async function subscribe() {
 
     let diff = Date.now() - parsedData.time["gq"]["gqReceived"]["utc"];
     setTimeout(async () => {
-      logData.value.push(parsedData!);
+      if (parsedData) {
+        logData.value.push(parsedData!);
+      }
       lineData.value.push({
         time: Date.now(),
         value: Math.abs(diff),
