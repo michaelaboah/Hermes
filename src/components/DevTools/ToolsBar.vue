@@ -166,6 +166,7 @@ async function subscribe() {
       lineData.value.push({
         time: Date.now(),
         value: Math.abs(
+          //@ts-expect-error
           Date.now() - parsedData.time["gq"]["gqReceived"]["utc"]
         ),
       });
