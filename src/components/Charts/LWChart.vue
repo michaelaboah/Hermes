@@ -12,6 +12,7 @@ import {
 //@ts-expect-error
 import resize from "vue-resize-directive";
 import {
+  ColorType,
   createChart,
   type IChartApi,
   type ISeriesApi,
@@ -30,15 +31,15 @@ const props = defineProps({
   },
   volumeData: {
     type: Array,
-    required: true,
+    required: false,
   },
   lineData: {
     type: Array,
-    required: true,
+    required: false,
   },
   ohlcData: {
     type: Array,
-    required: true,
+    required: false,
   },
   autosize: {
     default: true,
@@ -134,6 +135,19 @@ const addSeriesAndData = (props: Readonly<ExtractPropTypes<any>>): void => {
 
       case "lineVolume":
         lineSeries = chart.addLineSeries({ ...props.seriesOptions });
+        chart.applyOptions({
+          layout: {
+            textColor: "#e3e3e3",
+            background: { color: "#18181c", type: ColorType.Solid },
+          },
+
+          grid: {
+            vertLines: { color: "#444" },
+            horzLines: { color: "#444" },
+          },
+        });
+
+        lineSeries.applyOptions({ color: "#FFA500" });
         lineSeries!.setData(props.lineData);
         histSeries = chart.addHistogramSeries({
           color: "#26a69a",
