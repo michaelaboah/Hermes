@@ -57,7 +57,7 @@
     </div>
 
     <div class="relative flex flex-col">
-      <!-- <LWChart
+      <LWChart
         v-if="lineData.length > 1"
         :line-data="lineData"
         :type="'lineVolume'"
@@ -66,7 +66,7 @@
         :autosize="true"
         ref="lwChart"
         class="h-80 w-full"
-      /> -->
+      />
       <div>
         <h3 class="place-content-center">Logs</h3>
         <n-scrollbar class="relative flex max-h-80">
