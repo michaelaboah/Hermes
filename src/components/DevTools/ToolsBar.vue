@@ -57,7 +57,7 @@
     </div>
 
     <div class="relative flex flex-col">
-      <LWChart
+      <!-- <LWChart
         v-if="lineData.length > 1"
         :line-data="lineData"
         :type="'lineVolume'"
@@ -66,7 +66,7 @@
         :autosize="true"
         ref="lwChart"
         class="h-80 w-full"
-      />
+      /> -->
       <div>
         <h3 class="place-content-center">Logs</h3>
         <n-scrollbar class="relative flex max-h-80">
@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+//@ts-nocheck
 import { reactive, ref } from "vue";
 import { NSelect, NButton, NScrollbar } from "naive-ui";
 import LWChart from "../Charts/LWChart.vue";
@@ -161,15 +162,15 @@ async function subscribe() {
       return;
     }
 
-    setTimeout(() => {
+    let diff = Date.now() - parsedData.time["gq"]["gqReceived"]["utc"];
+    setTimeout(async () => {
       logData.value.push(parsedData!);
       lineData.value.push({
         time: Date.now(),
-        value: Math.abs(
-          //@ts-expect-error
-          Date.now() - parsedData.time["gq"]["gqReceived"]["utc"]
-        ),
+        value: Math.abs(diff),
       });
+
+      console.log(Math.abs(diff));
     }, 2 * 1000);
     // Print the received message to the output div
   }; // When the WebSocket connection is closed
