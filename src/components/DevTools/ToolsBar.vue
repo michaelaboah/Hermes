@@ -59,7 +59,7 @@
     </div>
     <div class="flex grow max-w-7xl">
       <div
-        class="grid gap-4 grid-cols-2 grid-rows-2 place-items-center w-screen"
+        class="grid gap-1 grid-cols-2 grid-rows-2 place-items-center w-screen"
       >
         <n-card class="bg-gray-800 grow h-4/5">
           <LWChart
@@ -72,7 +72,7 @@
             ref="lwChart"
             class="w-full h-full"
           />
-          <div v-else>
+          <div v-else class="m-auto">
             <n-empty description="No data">
               <template #extra>
                 <n-icon> </n-icon>
@@ -91,16 +91,16 @@
             {{ lineData }}
           </n-scrollbar>
         </n-card>
-        <n-card class="grow h-4/5 bg-gray-800 text-white">
-          <h3 class="text-center lg:text-left">Logs</h3>
+        <n-card class="grow h-4/5 bg-gray-800 text-white pb-4">
+          <n-h2 class="text-center lg:text-left text-white">Logs</n-h2>
           <n-config-provider :hljs="hljs">
             <n-scrollbar class="relative flex max-h-80">
-              <n-card v-for="log in logData">
+              <n-card v-for="log in logData" class="bg-gray-800">
                 <n-code
                   word-wrap
                   :code="JSON.stringify(log, null, '\t')"
                   language="json"
-                  class="w-full flex"
+                  class="w-full flex bg-gray-700"
                 />
               </n-card>
             </n-scrollbar>
@@ -123,6 +123,7 @@ import {
   NEmpty,
   NIcon,
   NCard,
+  NH2,
 } from "naive-ui";
 //@ts-expect-error
 // import { CaChartLineSmooth } from "@kalimahapps/vue-icons";
@@ -186,6 +187,7 @@ async function getSymbols() {
 const socket = new WebSocket(import.meta.env.VITE_SOCKET_API);
 const diffCache = ref<number[]>([]);
 const logCache: Object[] = [];
+let timer = false;
 
 async function subscribe() {
   const { symbol, asset, type, exchange } = selected;
@@ -195,7 +197,7 @@ async function subscribe() {
   socket.onopen = async (event) => {
     console.log("WebSocket connection opened");
   }; // When a message is received over the WebSocket connection
-
+  timer = true;
   socket.onmessage = async (event) => {
     let rawData: string | ArrayBuffer = event.data;
     if (typeof rawData !== "string") {
@@ -222,15 +224,17 @@ async function subscribe() {
 }
 
 setInterval(async () => {
-  lineData.value.push({
-    value: diffCache.value[1],
-    time: Date.now(),
-  });
+  if (timer) {
+    lineData.value.push({
+      value: diffCache.value[1],
+      time: Date.now(),
+    });
 
-  logData.value.push(logCache[1]);
+    logData.value.push(logCache[1]);
 
-  logCache.length = 0;
-  diffCache.value.length = 0;
+    logCache.length = 0;
+    diffCache.value.length = 0;
+  }
 }, 10 * 1000);
 
 async function disconnect() {
