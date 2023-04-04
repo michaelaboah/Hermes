@@ -125,7 +125,6 @@ import {
   NCard,
   NH2,
 } from "naive-ui";
-//@ts-expect-error
 // import { CaChartLineSmooth } from "@kalimahapps/vue-icons";
 import hljs from "highlight.js";
 import json from "highlight.js/lib/languages/json";
@@ -241,6 +240,7 @@ async function disconnect() {
   // if (socket) {
   // }
   socket.close();
+  timer = false;
 }
 
 function handleSubscription() {

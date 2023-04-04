@@ -149,23 +149,23 @@ const addSeriesAndData = (props: Readonly<ExtractPropTypes<any>>): void => {
 
         lineSeries.applyOptions({ color: "#FFA500" });
         lineSeries!.setData(props.lineData);
-        histSeries = chart.addHistogramSeries({
-          color: "#26a69a",
-          priceFormat: {
-            type: "volume",
-          },
-          priceScaleId: "",
-          ...props.seriesOptions,
-        });
+        // histSeries = chart.addHistogramSeries({
+        //   color: "#26a69a",
+        //   priceFormat: {
+        //     type: "volume",
+        //   },
+        //   priceScaleId: "",
+        //   ...props.seriesOptions,
+        // });
 
-        histSeries.priceScale().applyOptions({
-          scaleMargins: {
-            top: 0.9,
-            bottom: 0,
-          },
-        });
+        // histSeries.priceScale().applyOptions({
+        //   scaleMargins: {
+        //     top: 0.9,
+        //     bottom: 0,
+        //   },
+        // });
 
-        histSeries!.setData(props.volumeData);
+        // histSeries!.setData(props.volumeData);
 
         // chart.priceScale('').applyOptions({
         //     // Difference between
@@ -235,7 +235,7 @@ const addSeriesAndData = (props: Readonly<ExtractPropTypes<any>>): void => {
         break;
     }
     // lineSeries!.setData(props.lineData)
-    // series!.setData(props.data);
+    series!.setData(props.data);
   }
 };
 
@@ -306,15 +306,15 @@ watch(
 );
 
 // ******** Data watchers
-watch(props.volumeData!, (newData) => {
-  if (series) {
-    series.setData(newData);
-  }
+// watch(props.volumeData!, (newData) => {
+//   if (series) {
+//     series.setData(newData);
+//   }
 
-  if (histSeries) {
-    histSeries.setData(newData as any[]);
-  }
-});
+//   if (histSeries) {
+//     histSeries.setData(newData as any[]);
+//   }
+// });
 
 // Single Value Data
 watch(props.lineData!, (newData) => {
