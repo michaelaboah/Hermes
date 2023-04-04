@@ -123,9 +123,7 @@ let logData = ref<Object[]>([]);
 async function getSymbols() {
   const { exchange } = selected;
   if (exchange !== null) {
-    const response = await fetch(
-      `https://api.goquant.io/symbols?exchange=${exchange}`
-    );
+    const response = await fetch(import.meta.env.VITE_SYMBOLS_API + exchange);
     let temp: string[] = await response.json();
     symbols.value = temp.map((x) => {
       return { label: x, value: x };
@@ -135,7 +133,7 @@ async function getSymbols() {
   }
 }
 
-const socket = new WebSocket("wss://api.goquant.io/ws");
+const socket = new WebSocket(import.meta.env.VITE_SOCKET_API);
 
 async function subscribe() {
   const { symbol, asset, type, exchange } = selected;
