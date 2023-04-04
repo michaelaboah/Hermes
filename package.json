@@ -12,10 +12,13 @@
   "dependencies": {
     "@kalimahapps/vue-icons": "^1.1.6",
     "@tauri-apps/api": "^1.2.0",
+    "highlight.js": "^11.7.0",
     "lightweight-charts": "^4.0.1",
     "tailwind-scrollbar-hide": "^1.1.7",
     "vue": "^3.2.45",
+    "vue-code-highlight": "^0.7.8",
     "vue-resizable": "^2.1.7",
+    "vue3-highlightjs": "^1.0.5",
     "webrtc-adapter": "^8.2.1"
   },
   "devDependencies": {
